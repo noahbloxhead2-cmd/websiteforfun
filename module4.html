@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Module 4 – Gooble</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    background-size: 300% 300%;
+    animation: bgShift 12s ease infinite;
+    color: white;
+    padding: 40px;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.15);
+  }
+
+  .note {
+    text-align: center;
+    opacity: 0.7;
+    margin-bottom: 30px;
+    font-size: 1rem;
+  }
+
+  .code-box {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    position: relative;
+    white-space: pre;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .copied {
+    background: limegreen !important;
+    border-color: lime !important;
+    color: black !important;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Gooble – WinNet Module</h1>
+<div class="note">(Made for the creator — not really for public use)</div>
+
+<div class="code-box" id="codeBox">
+<button class="copy-btn" onclick="copyCode()" id="copyBtn">Copy</button>
+
+<code id="codeText">
+const win0 = makeWindow(200,400,"WinNet",0,0);
+
+const searchBar = document.createElement('textarea');
+searchBar.placeholder = 'Search the somewhat wide web';
+win0.appendChild(searchBar);
+
+const searchButton = document.createElement('button');
+searchButton.textContent = "Search";
+win0.appendChild(searchButton);
+
+const sizeInputs = document.createElement('textarea');
+sizeInputs.value = "500 1380";
+win0.appendChild(sizeInputs);
+
+searchButton.onclick = function() {
+    try {
+        const url = searchBar.value;
+        const sizes = sizeInputs.value.split(" ");
+        const resultWin = makeWindow(`${sizes[0]}`,`${sizes[1]}`,`${url} -- WinNet`,0,0);
+        const web = document.createElement('iframe');
+        web.style.height = `${sizes[0]}px`;
+        web.style.width = `${sizes[1]}px`;
+        web.src = `https://${url}`;
+        resultWin.appendChild(web);
+    }
+    catch (e) {
+        searchBar.value = `Error: ${e.message}`
+    }
+}
+</code>
+
+</div>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("codeText").innerText;
+  navigator.clipboard.writeText(code);
+
+  const btn = document.getElementById("copyBtn");
+  btn.textContent = "Copied!";
+  btn.classList.add("copied");
+
+  setTimeout(() => {
+    btn.textContent = "Copy";
+    btn.classList.remove("copied");
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
 
