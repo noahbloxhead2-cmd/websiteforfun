@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Module – Clicker Game</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    background-size: 300% 300%;
+    animation: bgShift 12s ease infinite;
+    color: white;
+    padding: 40px;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.15);
+  }
+
+  .code-box {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    position: relative;
+    white-space: pre;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .copied {
+    background: limegreen !important;
+    border-color: lime !important;
+    color: black !important;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Clicker Game Module</h1>
+
+<div class="code-box" id="codeBox">
+<button class="copy-btn" onclick="copyCode()" id="copyBtn">Copy</button>
+
+<code id="codeText">
+const win0test = makeWindow(200,400,'Clicker game', 0, 0);
+const text0test = document.createElement('h1');
+
+maketext('white', 'Have fun :)');
+
+text0test.textContent = 0;
+text0test.style.color = 'black';
+let clicks = 0;
+win0test.appendChild(text0test);
+
+const button0test = document.createElement('button');
+button0test.textContent = "Click me"
+button0test.onclick = function() {
+    clicks ++;
+    text0test.textContent = clicks;
+}
+win0test.appendChild(button0test);
+</code>
+
+</div>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("codeText").innerText;
+  navigator.clipboard.writeText(code);
+
+  const btn = document.getElementById("copyBtn");
+  btn.textContent = "Copied!";
+  btn.classList.add("copied");
+
+  setTimeout(() => {
+    btn.textContent = "Copy";
+    btn.classList.remove("copied");
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
 
