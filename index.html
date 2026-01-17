@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomePage</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+        background-size: 300% 300%;
+        animation: bgShift 12s ease infinite;
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      @keyframes bgShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Fade-in animation */
+      .fade {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeIn 1.2s forwards;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .home-wrap {
+        padding: 50px 30px;
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      .hero {
+        text-align: center;
+        margin-bottom: 70px;
+      }
+
+      .hero h1 {
+        font-size: 3.4rem;
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -1px;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      }
+
+      #subtitle {
+        font-size: 1.3rem;
+        opacity: 0.85;
+        margin-top: 14px;
+        height: 28px;
+      }
+
+      /* Section titles */
+      .section-title {
+        font-size: 2.2rem;
+        margin: 70px 0 25px;
+        text-align: center;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
+      }
+
+      /* About section */
+      .about-box {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 28px;
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        line-height: 1.7;
+        font-size: 1.15rem;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+      }
+
+      /* Cards */
+      .cards {
+        display: grid;
+        gap: 26px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        margin-top: 10px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 26px;
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        transition:
+          transform 0.25s,
+          background 0.25s,
+          box-shadow 0.25s;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        background: rgba(255, 255, 255, 0.14);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+      }
+
+      .card h3 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.35rem;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Skills section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 22px;
+        margin-top: 25px;
+      }
+
+      .skill {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 20px;
+        border-radius: 14px;
+        text-align: center;
+        font-size: 1.15rem;
+        backdrop-filter: blur(8px);
+        transition: 0.25s;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .skill:hover {
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateY(-4px);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.18);
+      }
+      #subtitle {
+        font-size: 1.3rem;
+        opacity: 0.85;
+        margin-top: 14px;
+        height: 28px;
+        transition: opacity 0.6s ease;
+      }
+      /* Clickable cards */
+      .card.clickable {
+        cursor: pointer;
+      }
+
+      /* Dropdown container */
+      .dropdown {
+        margin-top: 10px;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Dropdown items */
+      .dropdown-item {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 14px;
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+        transition: 0.25s;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+      }
+
+      .dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateX(6px);
+      }
+
+      /* Show dropdown on hover */
+      .card.terminal:hover .dropdown {
+        display: flex;
+        animation: dropFade 0.4s ease forwards;
+      }
+
+      @keyframes dropFade {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Footer */
+      footer {
+        margin-top: 90px;
+        padding: 25px;
+        text-align: center;
+        opacity: 0.75;
+        font-size: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 35px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="home-wrap fade">
+      <!-- HERO -->
+      <section class="hero">
+        <h1>Coding Projects</h1>
+        <p id="subtitle"></p>
+      </section>
+
+      <!-- ABOUT -->
+      <h2 class="section-title">About me or whatever</h2>
+      <div class="about-box">
+        egg.
+        <br /><br />
+        I drink bread
+      </div>
+
+      <!-- PROJECTS -->
+      <h2 class="section-title">
+        Featured Projects(also i have nothing else to add)
+      </h2>
+      <section class="cards">
+        <div class="card clickable terminal" onclick="goTerminal()">
+          <h3>Project "Terminal"</h3>
+          <p>A CLI that allows use of AppImport to paste in JS code</p>
+
+          <div class="dropdown">
+            <div
+              class="dropdown-item"
+              onclick="
+                event.stopPropagation();
+                goModule(1);
+              "
+            >
+              Module 1
+            </div>
+            <div
+              class="dropdown-item"
+              onclick="
+                event.stopPropagation();
+                goModule(2);
+              "
+            >
+              Module 2
+            </div>
+            <div
+              class="dropdown-item"
+              onclick="
+                event.stopPropagation();
+                goModule(3);
+              "
+            >
+              Module 3
+            </div>
+            <div
+              class="dropdown-item"
+              onclick="
+                event.stopPropagation();
+                goModule(4);
+              "
+            >
+              Module 4
+            </div>
+          </div>
+        </div>
+
+        <div class="card clickable" onclick="goClicker()">
+          <h3>Project "Global Clicker"</h3>
+          <p>Global clicker game that taught me how painful databases are</p>
+        </div>
+
+        <div class="card">
+          <h3>Coming soon</h3>
+          <p>Probably me when i remember i have website also some i's are capital some are not lol</p>
+        </div>
+
+        <div class="card">
+          <h3>Upcoming</h3>
+          <p>idk</p>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <h2 class="section-title">
+        Stuff that i know or whatever i used ai for the idea of this page
+      </h2>
+      <div class="skills-grid">
+        <div class="skill">JavaScript</div>
+        <div class="skill">HTML & CSS</div>
+        <div class="skill">Python</div>
+        <div class="skill">Java</div>
+        <div class="skill">C++ kinda</div>
+        <div class="skill">Using iframes for everything</div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>I also swallow mouthwash.</footer>
+    </div>
+
+    <script>
+      function goTerminal() {
+        window.location.href =
+          "https://sites.google.com/view/websiteforfun/projects/terminal";
+      }
+
+      function goClicker() {
+        window.location.href =
+          "https://sites.google.com/view/websiteforfun/projects/global-clicker";
+      }
+
+      function goModule(num) {
+        const base =
+          "https://sites.google.com/view/websiteforfun/projects/terminal";
+        const paths = {
+          1: "/module1",
+          2: "/module2",
+          3: "/module-3",
+          4: "/module-4",
+        };
+        window.location.href = base + paths[num];
+      }
+
+      const subtitles = [
+        "By ****.",
+        "I drink shampoo.",
+        "Shoutout to uhh **** for making this.",
+        "Built with tears, tears, and tears.",
+      ];
+
+      let i = 0;
+      const el = document.getElementById("subtitle");
+
+      function rotateSubtitle() {
+        // fade out
+        el.style.opacity = 0;
+
+        setTimeout(() => {
+          // change text when invisible
+          el.textContent = subtitles[i];
+          i = (i + 1) % subtitles.length;
+
+          // fade in
+          el.style.opacity = 1;
+        }, 600); // matches CSS transition
+      }
+
+      rotateSubtitle();
+      setInterval(rotateSubtitle, 2500);
+    </script>
+  </body>
+</html>
