@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Module 1</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    background-size: 300% 300%;
+    animation: bgShift 12s ease infinite;
+    color: white;
+    padding: 40px;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.15);
+  }
+
+  .code-box {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    position: relative;
+    white-space: pre;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .copied {
+    background: limegreen !important;
+    border-color: lime !important;
+    color: black !important;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Module 1 -- Rlly just made for the creator srry</h1>
+
+<div class="code-box" id="codeBox">
+<button class="copy-btn" onclick="copyCode()" id="copyBtn">Copy</button>
+
+<code id="codeText">
+if (command[0] == "InitS" && dir == 'core'){
+    dir = 'core#ShortcutManager';
+    currentcolor = 'darkgoldenrod';
+    updateUI();
+    
+    maketext('darkgoldenrod', 'ShortcutManager: Welcome to the shortcutManager');
+    commandFound = true;
+}
+
+if (command[0] == "CreateShortcut" && dir == 'core#ShortcutManager') {
+    shortcuts[`${command[1]}`] = command[2];
+    maketext('lime', `ShortcutManager: Created shortcut ${command[1]} -> ${command[2]}`);
+    commandFound = true;
+}
+else if (command[0] == 'ListShortcuts' && dir == 'core#ShortcutManager') {
+    for (const shortcut in shortcuts){
+        maketext('purple', shortcut + ": " + shortcuts[shortcut]);
+    }
+    commandFound = true;
+}
+else if (command[0] == 'RemoveShortcut' && dir == 'core#ShortcutManager') {
+    delete shortcuts[command[1]];
+    maketext('purple', `Removed shortcut: ${command[1]}.`);
+    commandFound = true;
+}
+else if (command[0] == 'exit' && dir == 'core#ShortcutManager') {
+    dir = 'core';
+    currentcolor = 'lime';
+    updateUI();
+    commandFound = true;
+}
+</code>
+
+</div>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("codeText").innerText;
+  navigator.clipboard.writeText(code);
+
+  const btn = document.getElementById("copyBtn");
+  btn.textContent = "Copied!";
+  btn.classList.add("copied");
+
+  setTimeout(() => {
+    btn.textContent = "Copy";
+    btn.classList.remove("copied");
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
 
