@@ -1,1 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Module – Shortcut Manager UI</title>
 
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    background-size: 300% 300%;
+    animation: bgShift 12s ease infinite;
+    color: white;
+    padding: 40px;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.15);
+  }
+
+  .note {
+    text-align: center;
+    opacity: 0.7;
+    margin-bottom: 30px;
+    font-size: 1rem;
+  }
+
+  .code-box {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    position: relative;
+    white-space: pre;
+    overflow-x: auto;
+    font-family: Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .copy-btn:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .copied {
+    background: limegreen !important;
+    border-color: lime !important;
+    color: black !important;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Shortcut Manager Module</h1>
+<div class="note">(Made for the creator — not really for public use)</div>
+
+<div class="code-box" id="codeBox">
+<button class="copy-btn" onclick="copyCode()" id="copyBtn">Copy</button>
+
+<code id="codeText">
+const win0 = makeWindow(200,500,'Shortcut Manager',0,0);
+
+const optionContainer = document.createElement('div');
+win0.appendChild(optionContainer);
+
+
+const createShortcutButton = document.createElement('button');
+createShortcutButton.textContent = 'Create';
+optionContainer.appendChild(createShortcutButton);
+
+const viewShortcutButton = document.createElement('button');
+viewShortcutButton.textContent = 'View';
+optionContainer.appendChild(viewShortcutButton);
+
+const removeShortcutButton = document.createElement('button');
+removeShortcutButton.textContent = 'Delete';
+optionContainer.appendChild(removeShortcutButton);
+
+
+createShortcutButton.onclick = function() {
+    const winC = makeWindow(200,500,'Create Shortcut',0,0);
+
+    const shortcutInp = document.createElement('textarea');
+    shortcutInp.placeholder = "Shortcut here...";
+    winC.appendChild(shortcutInp);
+    
+    const linkInp = document.createElement('textarea');
+    linkInp.placeholder = "Url here...";
+    winC.appendChild(linkInp);
+    
+    const createButton = document.createElement('button');
+    createButton.textContent = "Make shortcut";
+    winC.appendChild(createButton);
+
+    createButton.onclick = function() {
+        shortcuts[shortcutInp.value] = linkInp.value;
+        
+        shortcutInp.value = "Shortcut created.";
+        linkInp.value = "Text goes here";
+        
+    }
+}
+
+
+viewShortcutButton.onclick = function() {
+    const winV = makeWindow(200,500,'View Shortcuts',0,0);
+
+    const scrollBar = document.createElement('div');
+    scrollBar.style.overflow = 'scroll';
+    winV.appendChild(scrollBar);
+
+    for (const key in shortcuts) {
+        const shortcutTxt = document.createElement('h1');
+        shortcutTxt.textContent = `${key}: ${shortcuts[key]}`;
+        shortcutTxt.style.color = 'black';
+        scrollBar.appendChild(shortcutTxt);
+    }
+}
+
+removeShortcutButton.onclick = function() {
+    const winV = makeWindow(80,500,'Remove Shortcuts',0,0);
+
+    const scrollBar = document.createElement('div');
+    scrollBar.style.overflow = 'scroll';
+    winV.appendChild(scrollBar);
+
+    for (const key in shortcuts) {
+        const shortcutTxt = document.createElement('h1');
+        shortcutTxt.textContent = key;
+        shortcutTxt.style.color = 'black';
+        scrollBar.appendChild(shortcutTxt);
+
+        const removebutton = document.createElement('button');
+        removebutton.textContent = 'Delete';
+        scrollBar.appendChild(removebutton);
+
+        removebutton.onclick = function() {
+            delete shortcuts[key];
+            shortcutTxt.textContent = 'Deleted';
+            shortcutTxt.style.color = 'red';
+        }
+    }
+}
+</code>
+
+</div>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("codeText").innerText;
+  navigator.clipboard.writeText(code);
+
+  const btn = document.getElementById("copyBtn");
+  btn.textContent = "Copied!";
+  btn.classList.add("copied");
+
+  setTimeout(() => {
+    btn.textContent = "Copy";
+    btn.classList.remove("copied");
+  }, 1500);
+}
+</script>
+
+</body>
+</html>
